@@ -10,9 +10,9 @@ export const metadata = {
   applicationName: 'SiJimat',
   description: 'Kelola jadwal imam tarawih masjid Anda dengan mudah dan otomatis.',
   icons: {
-    icon: '/logo.png',
-    shortcut: '/logo.png',
-    apple: '/logo.png',
+    icon: '/icon.png',
+    shortcut: '/icon.png',
+    apple: '/apple-icon.png',
   },
   openGraph: {
     title: 'SiJimat',
