@@ -40,20 +40,6 @@ export default function HomePage() {
                 <a href="#cara-kerja" className="btn btn-secondary">Lihat Cara Kerja</a>
               </div>
 
-              <div className="hero-stats reveal">
-                <div className="stat-item">
-                  <strong style={{ fontFamily: 'var(--font-display)', fontSize: '1.35rem', color: 'var(--accent-teal)' }}>30</strong>
-                  <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)', fontWeight: 600 }}>Malam Ramadan</span>
-                </div>
-                <div className="stat-item">
-                  <strong style={{ fontFamily: 'var(--font-display)', fontSize: '1.35rem', color: 'var(--accent-teal)' }}>99+</strong>
-                  <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)', fontWeight: 600 }}>Imam terdaftar</span>
-                </div>
-                <div className="stat-item">
-                  <strong style={{ fontFamily: 'var(--font-display)', fontSize: '1.35rem', color: 'var(--accent-teal)' }}>24/7</strong>
-                  <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)', fontWeight: 600 }}>Akses jadwal</span>
-                </div>
-              </div>
             </div>
 
             {/* Bagian Kanan: Mockup Card */}
