@@ -62,7 +62,7 @@ export default function RoleManager({ users }) {
       padding: '1.25rem',
       marginBottom: '1.5rem',
     }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', gap: '1rem', alignItems: 'center', marginBottom: '1rem' }}>
+      <div className="panel-heading-row" style={{ display: 'flex', justifyContent: 'space-between', gap: '1rem', alignItems: 'center', marginBottom: '1rem' }}>
         <div>
           <h2 style={{ fontSize: '1.05rem', fontWeight: '700', color: '#111827', marginBottom: '0.2rem' }}>
             Kelola Role Pengguna
@@ -96,6 +96,7 @@ export default function RoleManager({ users }) {
           {users.map((user) => (
             <div
               key={user.id}
+              className="role-user-row"
               style={{
                 display: 'grid',
                 gridTemplateColumns: 'minmax(0, 1fr) 150px auto',

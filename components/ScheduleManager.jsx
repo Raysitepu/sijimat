@@ -182,7 +182,7 @@ export default function ScheduleManager({ imams, schedules, scheduleError }) {
           Pilih imam, malam Ramadan, waktu, dan masjid untuk ditampilkan di jadwal publik.
         </p>
 
-        <form action={formAction} style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: '0.85rem' }}>
+        <form className="schedule-form-grid" action={formAction} style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: '0.85rem' }}>
           <Field label="Malam" error={errors.malam}>
             <input name="malam" type="number" min="1" max="30" placeholder="1" required style={inputStyle(errors.malam)} />
           </Field>
@@ -241,7 +241,7 @@ export default function ScheduleManager({ imams, schedules, scheduleError }) {
             </div>
             <div style={{ display: 'grid', gap: '0.55rem' }}>
               {actionNeededSchedules.map((schedule) => (
-                <div key={schedule.id} style={{
+                <div key={schedule.id} className="action-needed-row" style={{
                   display: 'grid',
                   gridTemplateColumns: '90px minmax(0, 1fr) 160px',
                   gap: '0.75rem',
@@ -290,7 +290,7 @@ export default function ScheduleManager({ imams, schedules, scheduleError }) {
           <p style={{ color: '#6b7280', fontSize: '0.86rem', fontWeight: '700' }}>
             {filteredSchedules.length} dari {schedules.length} jadwal ditampilkan
           </p>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', flexWrap: 'wrap' }}>
+          <div className="schedule-toolbar" style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', flexWrap: 'wrap' }}>
             <button
               type="button"
               onClick={handleCopySchedule}
@@ -372,7 +372,7 @@ export default function ScheduleManager({ imams, schedules, scheduleError }) {
                     }}
                   />
                 ) : (
-                  <div style={{
+                  <div className="schedule-row" style={{
                     display: 'grid',
                     gridTemplateColumns: '90px minmax(0, 1fr) 160px auto auto',
                     gap: '1rem',
@@ -566,7 +566,7 @@ function EditScheduleForm({ schedule, imams, onCancel, onSaved }) {
         </div>
       )}
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, minmax(0, 1fr))', gap: '0.75rem' }}>
+      <div className="edit-schedule-grid edit-schedule-grid-four" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, minmax(0, 1fr))', gap: '0.75rem' }}>
         <Field label="Malam" error={errors.malam}>
           <input name="malam" type="number" min="1" max="30" defaultValue={schedule.malam} required style={inputStyle(errors.malam)} />
         </Field>
@@ -581,7 +581,7 @@ function EditScheduleForm({ schedule, imams, onCancel, onSaved }) {
         </Field>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: '0.75rem' }}>
+      <div className="edit-schedule-grid edit-schedule-grid-three" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: '0.75rem' }}>
         <Field label="Imam Pengganti" error={errors.imam_id}>
           <select name="imam_id" required style={inputStyle(errors.imam_id)} defaultValue={schedule.imam?.id || schedule.imam_id || ''}>
             <option value="" disabled>Pilih imam...</option>

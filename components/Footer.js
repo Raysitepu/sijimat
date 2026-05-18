@@ -1,13 +1,11 @@
-import Link from 'next/link'
 import Image from 'next/image'
+import Link from 'next/link'
 
 export default function Footer() {
   return (
     <footer>
       <div className="container">
         <div className="footer-top">
-
-          {/* Brand */}
           <div className="footer-brand">
             <Link href="/" className="logo" aria-label="SiJimat">
               <div className="logo-icon">
@@ -21,7 +19,6 @@ export default function Footer() {
             <p>Solusi digital untuk pengurus masjid dalam mengelola jadwal imam tarawih Ramadan dengan mudah dan efisien.</p>
           </div>
 
-          {/* Produk */}
           <nav className="footer-col" aria-label="Tautan produk">
             <h4>Produk</h4>
             <ul>
@@ -31,7 +28,6 @@ export default function Footer() {
             </ul>
           </nav>
 
-          {/* Komunitas */}
           <nav className="footer-col" aria-label="Tautan komunitas">
             <h4>Komunitas</h4>
             <ul>
@@ -41,7 +37,6 @@ export default function Footer() {
             </ul>
           </nav>
 
-          {/* Kontak */}
           <nav className="footer-col" aria-label="Tautan kontak">
             <h4>Kontak</h4>
             <ul>
@@ -50,10 +45,10 @@ export default function Footer() {
               <li><Link href="#">Syarat &amp; Ketentuan</Link></li>
             </ul>
           </nav>
-
         </div>
+
         <div className="footer-bottom">
-          <span>© 2025 SiJimat</span>
+          <span>Copyright 2025 SiJimat</span>
         </div>
       </div>
     </footer>

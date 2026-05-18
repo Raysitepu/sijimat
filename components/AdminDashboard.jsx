@@ -23,7 +23,7 @@ export default function AdminDashboard({ users, imams, schedules, scheduleError,
 
   return (
     <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
-      <div style={{
+      <div className="admin-heading-row" style={{
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'flex-start',
@@ -59,7 +59,7 @@ export default function AdminDashboard({ users, imams, schedules, scheduleError,
         </Link>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: '0.85rem', marginBottom: '1.25rem' }}>
+      <div className="admin-stats-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: '0.85rem', marginBottom: '1.25rem' }}>
         {stats.map((stat) => (
           <div key={stat.label} style={{
             background: 'white',
@@ -73,7 +73,7 @@ export default function AdminDashboard({ users, imams, schedules, scheduleError,
         ))}
       </div>
 
-      <div style={{
+      <div className="admin-tabs" style={{
         background: 'white',
         border: '1px solid #e5e7eb',
         borderRadius: '12px',

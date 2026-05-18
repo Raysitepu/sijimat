@@ -215,13 +215,152 @@ footer { background: var(--text); color: rgba(255,255,255,0.85); padding: clamp(
   .testimonials-grid { grid-template-columns: 1fr; }
   .footer-top        { grid-template-columns: 1fr 1fr; }
 }
+@media (max-width: 760px) {
+  .public-header-inner {
+    min-height: auto !important;
+    padding: 0.75rem 1rem 0.65rem !important;
+    flex-wrap: wrap;
+    align-items: center !important;
+    gap: 0.75rem !important;
+  }
+
+  .public-brand {
+    flex: 1 1 auto;
+  }
+
+  .public-actions {
+    gap: 0.45rem !important;
+  }
+
+  .public-actions a {
+    padding: 0.45rem 0.72rem !important;
+    font-size: 0.8rem !important;
+  }
+
+  .public-nav {
+    order: 3;
+    width: 100%;
+    overflow-x: auto;
+    gap: 1rem !important;
+    padding: 0.25rem 0 0.1rem;
+    scrollbar-width: none;
+  }
+
+  .public-nav::-webkit-scrollbar,
+  .dashboard-nav::-webkit-scrollbar,
+  .admin-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .dashboard-header-inner {
+    align-items: flex-start !important;
+    gap: 0.65rem !important;
+    padding: 0.7rem 1rem !important;
+  }
+
+  .dashboard-nav {
+    width: 100%;
+    flex-wrap: nowrap !important;
+    overflow-x: auto;
+    padding-bottom: 0.1rem;
+    scrollbar-width: none;
+  }
+
+  .dashboard-nav a,
+  .dashboard-nav button {
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .admin-heading-row,
+  .panel-heading-row {
+    flex-direction: column;
+    align-items: stretch !important;
+  }
+
+  .admin-heading-row a {
+    text-align: center;
+  }
+
+  .admin-stats-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .admin-tabs {
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .admin-tabs button {
+    min-width: 120px;
+  }
+
+  .role-user-row {
+    grid-template-columns: 1fr !important;
+    align-items: stretch !important;
+  }
+
+  .role-user-row button,
+  .role-user-row select {
+    width: 100%;
+  }
+
+  .imam-card {
+    flex-direction: column;
+    align-items: stretch !important;
+  }
+
+  .imam-card button {
+    width: 100%;
+  }
+
+  .schedule-form-grid,
+  .edit-schedule-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .action-needed-row,
+  .schedule-row {
+    grid-template-columns: 1fr !important;
+    align-items: stretch !important;
+  }
+
+  .schedule-toolbar {
+    width: 100%;
+    align-items: stretch !important;
+  }
+
+  .schedule-toolbar button,
+  .schedule-toolbar label,
+  .schedule-toolbar select {
+    width: 100%;
+  }
+
+  .public-schedule-head {
+    align-items: stretch !important;
+  }
+
+  .public-schedule-head input {
+    width: 100% !important;
+  }
+
+  .public-schedule-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
 @media (max-width: 580px) {
-  nav             { display: none; }
   .features-grid  { grid-template-columns: 1fr; }
   .steps-grid     { grid-template-columns: 1fr; }
   .footer-top     { grid-template-columns: 1fr; }
   .hero-stats     { flex-wrap: wrap; gap: 1rem; }
-  .hero-actions   { flex-direction: column; align-items: flex-start; }
+  .hero-actions   { flex-direction: column; align-items: stretch; }
+  .hero-actions .btn { width: 100%; justify-content: center; }
+  .hero-eyebrow { font-size: 0.68rem; letter-spacing: 0.08em; }
+  .hero-title { font-size: 2.05rem; }
+  .hero-desc { font-size: 0.94rem; }
+  .container { padding: 0 1rem; }
+  .public-brand-sub { display: none; }
+  .footer-col ul { display: grid; gap: 0.45rem; }
 }
 
 /* ANIMATIONS */

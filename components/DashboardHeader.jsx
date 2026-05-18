@@ -24,7 +24,7 @@ export default function DashboardHeader({ role = 'user', title = 'SiJimat' }) {
   const links = navByRole[role] || navByRole.user
 
   return (
-    <header style={{
+    <header className="dashboard-header" style={{
       position: 'sticky',
       top: 0,
       zIndex: 20,
@@ -32,7 +32,7 @@ export default function DashboardHeader({ role = 'user', title = 'SiJimat' }) {
       borderBottom: '1px solid #e5e7eb',
       boxShadow: '0 1px 8px rgba(15, 23, 42, 0.06)',
     }}>
-      <div style={{
+      <div className="dashboard-header-inner" style={{
         maxWidth: '1100px',
         margin: '0 auto',
         minHeight: '64px',
@@ -68,7 +68,7 @@ export default function DashboardHeader({ role = 'user', title = 'SiJimat' }) {
           <span>{title}</span>
         </Link>
 
-        <div role="navigation" aria-label="Navigasi dashboard" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
+        <div className="dashboard-nav" role="navigation" aria-label="Navigasi dashboard" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
           {links.map((link) => (
             <Link
               key={link.href}

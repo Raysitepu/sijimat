@@ -26,7 +26,7 @@ export default function PublicSchedule({ schedules, fallbackSchedules = [], titl
 
   return (
     <section style={{ display: 'grid', gap: '1rem' }}>
-      <div style={{
+      <div className="public-schedule-head" style={{
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'flex-end',
@@ -56,7 +56,7 @@ export default function PublicSchedule({ schedules, fallbackSchedules = [], titl
         />
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: '1rem' }}>
+      <div className="public-schedule-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: '1rem' }}>
         {filtered.map((schedule) => {
           const imamName = schedule.imam?.nama || schedule.imam || 'Imam belum ditentukan'
           const status = statusStyle[schedule.status || 'terjadwal'] || statusStyle.terjadwal

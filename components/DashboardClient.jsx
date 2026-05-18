@@ -121,7 +121,7 @@ export default function DashboardClient({ imams, query }) {
           const badge = badgeColor[imam.ketersediaan] || { bg: '#f3f4f6', color: '#374151', label: imam.ketersediaan }
 
           return (
-            <div key={imam.id} style={{
+            <div key={imam.id} className="imam-card" style={{
               background: 'white',
               borderRadius: '12px',
               padding: '1.25rem',
