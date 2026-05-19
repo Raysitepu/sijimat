@@ -13,17 +13,13 @@ const supabase = createClient(
 
 const masjidUtama = 'Masjid Al-Ikhlas'
 
-const sampleImams = [
-  { id: 'abad-badrussalam', imam: 'Ust. Abad Badrussalam', rakaat: 11, waktu: '19.30 WIB', nama_masjid: masjidUtama },
-  { id: 'zaenal-abidin', imam: 'Ust. Zaenal Abidin', rakaat: 11, waktu: '19.30 WIB', nama_masjid: masjidUtama },
-  { id: 'abdullah-fauzi', imam: 'Ust. Abdullah Fauzi', rakaat: 11, waktu: '19.30 WIB', nama_masjid: masjidUtama },
-  { id: 'iwan', imam: 'Ust. Iwan', rakaat: 11, waktu: '19.30 WIB', nama_masjid: masjidUtama },
-]
-
 const fallbackSchedules = Array.from({ length: 30 }, (_, index) => ({
-  ...sampleImams[index % sampleImams.length],
   id: `sample-${index + 1}`,
   malam: index + 1,
+  imam: 'Belum ditentukan',
+  rakaat: 11,
+  waktu: '19.30 WIB',
+  nama_masjid: masjidUtama,
   tanggal_label: `Hari ke-${index + 1}`,
   status: 'terjadwal',
 }))
@@ -72,7 +68,7 @@ export default async function JadwalPage() {
             <PublicSchedule
               schedules={publicSchedules}
               title="Jadwal Lengkap 30 Malam"
-              description="Jadwal bisa dilihat warga tanpa login. Data admin dipakai jika sudah tersedia, sisanya dilengkapi contoh jadwal 30 malam."
+              description="Jadwal bisa dilihat warga tanpa login. Malam yang belum diisi admin akan tampil sebagai belum ditentukan."
             />
           </div>
         </div>
