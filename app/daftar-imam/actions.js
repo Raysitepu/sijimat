@@ -63,7 +63,6 @@ export async function daftarImam(prevState, formData) {
       .maybeSingle()
 
     if (existingError) {
-      console.error('Check existing imam error:', existingError)
       return {
         status: 'error',
         message: 'Gagal memeriksa data imam. Silakan coba lagi.',
@@ -88,7 +87,6 @@ export async function daftarImam(prevState, formData) {
   const { error } = await supabaseAdmin.from('imam').insert([payload])
 
   if (error) {
-    console.error('Supabase error:', error)
     return {
       status: 'error',
       message: 'Gagal menyimpan data. Silakan coba lagi.',
@@ -144,7 +142,6 @@ export async function updateImamProfile(prevState, formData) {
     .maybeSingle()
 
   if (lookupError || !imam) {
-    console.error('Lookup imam profile error:', lookupError)
     return {
       status: 'error',
       message: 'Data imam ini tidak terhubung ke akun Anda.',
@@ -159,7 +156,6 @@ export async function updateImamProfile(prevState, formData) {
     .eq('user_id', userId)
 
   if (error) {
-    console.error('Update imam profile error:', error)
     return {
       status: 'error',
       message: 'Gagal mengubah data imam.',

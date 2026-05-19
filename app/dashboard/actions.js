@@ -60,7 +60,6 @@ export async function deleteImam(id) {
   ))
 
   if (unlinkResult?.error) {
-    console.error('Unlink jadwal imam error:', unlinkResult.error)
     return { status: 'error', message: 'Gagal melepas jadwal dari imam ini. Coba lagi.' }
   }
 
@@ -69,7 +68,6 @@ export async function deleteImam(id) {
   ))
 
   if (error) {
-    console.error('Delete error:', error)
     const message = `${error.message || ''} ${error.details || ''}`
     if (/fetch failed|timeout|network/i.test(message)) {
       return { status: 'error', message: 'Koneksi ke Supabase timeout. Data belum terhapus, coba klik hapus lagi.' }
@@ -102,7 +100,6 @@ export async function deleteUser(userId) {
     .eq('id', userId)
 
   if (error) {
-    console.error('Delete user error:', error)
     return { status: 'error', message: 'Gagal menghapus pengguna. Pastikan tidak ada data yang masih wajib terhubung ke user ini.' }
   }
 
@@ -135,7 +132,6 @@ export async function updateUserRole(userId, role) {
     .maybeSingle()
 
   if (error) {
-    console.error('Update role error:', error)
     return {
       status: 'error',
       message: 'Gagal mengubah role user. Cek izin update tabel users di Supabase.',
@@ -214,7 +210,6 @@ export async function createJadwal(prevState, formData) {
     .maybeSingle()
 
   if (duplicateCheckError) {
-    console.error('Duplicate jadwal check error:', duplicateCheckError)
     return {
       status: 'error',
       message: 'Gagal memeriksa jadwal yang sudah ada. Coba lagi.',
@@ -233,7 +228,6 @@ export async function createJadwal(prevState, formData) {
   const { error } = await supabaseAdmin.from('jadwal').insert([payload])
 
   if (error) {
-    console.error('Create jadwal error:', error)
     return {
       status: 'error',
       message: 'Gagal menyimpan jadwal. Pastikan tabel jadwal sudah dibuat dan service role key sudah benar.',
@@ -296,7 +290,6 @@ export async function updateJadwal(prevState, formData) {
     .maybeSingle()
 
   if (duplicateCheckError) {
-    console.error('Update duplicate jadwal check error:', duplicateCheckError)
     return {
       status: 'error',
       message: 'Gagal memeriksa jadwal yang sudah ada. Coba lagi.',
@@ -318,7 +311,6 @@ export async function updateJadwal(prevState, formData) {
     .eq('id', scheduleId)
 
   if (error) {
-    console.error('Update jadwal error:', error)
     return {
       status: 'error',
       message: 'Gagal mengubah jadwal.',
@@ -347,7 +339,6 @@ export async function updateJadwalStatus(scheduleId, status) {
     .eq('id', scheduleId)
 
   if (error) {
-    console.error('Update jadwal status error:', error)
     return { status: 'error', message: 'Gagal mengubah status jadwal.' }
   }
 
@@ -373,7 +364,6 @@ export async function confirmMyJadwal(scheduleId, nextStatus) {
     .eq('user_id', userId)
 
   if (imamError) {
-    console.error('Fetch imam profile error:', imamError)
     return { status: 'error', message: 'Gagal membaca data imam.' }
   }
 
@@ -389,7 +379,6 @@ export async function confirmMyJadwal(scheduleId, nextStatus) {
     .maybeSingle()
 
   if (scheduleError || !schedule) {
-    console.error('Fetch jadwal error:', scheduleError)
     return { status: 'error', message: 'Jadwal tidak ditemukan.' }
   }
 
@@ -403,7 +392,6 @@ export async function confirmMyJadwal(scheduleId, nextStatus) {
     .eq('id', scheduleId)
 
   if (error) {
-    console.error('Confirm jadwal error:', error)
     return { status: 'error', message: 'Gagal menyimpan konfirmasi jadwal.' }
   }
 
@@ -423,7 +411,6 @@ export async function deleteJadwal(id) {
   const { error } = await supabaseAdmin.from('jadwal').delete().eq('id', id)
 
   if (error) {
-    console.error('Delete jadwal error:', error)
     return { status: 'error', message: 'Gagal menghapus jadwal.' }
   }
 

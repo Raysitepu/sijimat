@@ -24,16 +24,16 @@ export default function Footer() {
             <ul>
               <li><Link href="/#features">Fitur</Link></li>
               <li><Link href="/#cara-kerja">Cara Kerja</Link></li>
-              <li><Link href="/#daftar">Daftar Gratis</Link></li>
+              <li><Link href="/register">Daftar Gratis</Link></li>
             </ul>
           </nav>
 
           <nav className="footer-col" aria-label="Tautan komunitas">
             <h4>Komunitas</h4>
             <ul>
-              <li><Link href="#">Grup</Link></li>
-              <li><Link href="#">Forum Diskusi</Link></li>
-              <li><Link href="#">Tanya Jawab</Link></li>
+              <li><Link href="/contact">Grup</Link></li>
+              <li><Link href="/contact">Forum Diskusi</Link></li>
+              <li><Link href="/contact">Tanya Jawab</Link></li>
             </ul>
           </nav>
 
@@ -41,8 +41,8 @@ export default function Footer() {
             <h4>Kontak</h4>
             <ul>
               <li><a href="mailto:halo@sijimat.id">halo@sijimat.id</a></li>
-              <li><Link href="#">Kebijakan Privasi</Link></li>
-              <li><Link href="#">Syarat &amp; Ketentuan</Link></li>
+              <li><Link href="/contact">Kebijakan Privasi</Link></li>
+              <li><Link href="/contact">Syarat &amp; Ketentuan</Link></li>
             </ul>
           </nav>
         </div>

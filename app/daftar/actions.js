@@ -56,7 +56,6 @@ export async function daftarImam(prevState, formData) {
   const { error } = await supabase.from('imam').insert([validated.data])
 
   if (error) {
-    console.error('Supabase error:', error)
     return {
       status: 'error',
       message: 'Gagal menyimpan data. Silakan coba lagi.',
