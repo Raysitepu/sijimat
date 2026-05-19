@@ -1,10 +1,48 @@
-'use client'
-
+import { createClient } from '@supabase/supabase-js'
 import Link from 'next/link'
-import SignupForm from '../components/SignupForm'
 import RevealAnimation from '../components/RevealAnimation'
 
-export default function HomePage() {
+export const dynamic = 'force-dynamic'
+
+const avatarGradients = [
+  'linear-gradient(135deg, var(--accent-teal), var(--accent-light))',
+  'linear-gradient(135deg,#c8873a,#e8a24a)',
+  'linear-gradient(135deg,#7c3aed,#a78bfa)',
+  'linear-gradient(135deg,#dc2626,#f87171)',
+]
+
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL,
+  process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+)
+
+function getInitials(name = '') {
+  const words = name
+    .replace(/^Ust\.?\s*/i, '')
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean)
+
+  if (words.length === 0) return 'IM'
+  if (words.length === 1) return words[0].slice(0, 2).toUpperCase()
+
+  return `${words[0][0]}${words[1][0]}`.toUpperCase()
+}
+
+async function getPreviewSchedules() {
+  const { data, error } = await supabase
+    .from('jadwal')
+    .select('id, malam, waktu, rakaat, nama_masjid, imam:imam_id(id, nama)')
+    .order('malam', { ascending: true })
+    .limit(4)
+
+  if (error) return []
+  return data || []
+}
+
+export default async function HomePage() {
+  const previewSchedules = await getPreviewSchedules()
+
   return (
     <main>
       <RevealAnimation />
@@ -48,47 +86,41 @@ export default function HomePage() {
                 <div className="mockup-header">
                   <span className="mockup-title">Jadwal Tarawih</span>
                 </div>
-                <ul className="jadwal-list" aria-label="Contoh daftar jadwal imam">
-                  <li className="jadwal-item active">
-                    <div className="jadwal-item-left">
-                      <div className="jadwal-avatar">AB</div>
-                      <div>
-                        <div className="jadwal-name">Ust. Abad Badrussalam</div>
-                        <div className="jadwal-date">Malam ke-15 - 19.30 WIB</div>
+                <ul className="jadwal-list" aria-label="Preview jadwal imam terbaru">
+                  {previewSchedules.length === 0 ? (
+                    <li className="jadwal-item active">
+                      <div className="jadwal-item-left">
+                        <div className="jadwal-avatar">IM</div>
+                        <div>
+                          <div className="jadwal-name">Jadwal belum tersedia</div>
+                          <div className="jadwal-date">Admin belum membuat jadwal</div>
+                        </div>
                       </div>
-                    </div>
-                    <span className="jadwal-rakaat">11 Rakaat</span>
-                  </li>
-                  <li className="jadwal-item">
-                    <div className="jadwal-item-left">
-                      <div className="jadwal-avatar" style={{ background: 'linear-gradient(135deg,#c8873a,#e8a24a)' }}>ZA</div>
-                      <div>
-                        <div className="jadwal-name">Ust. Zaenal Abidin</div>
-                        <div className="jadwal-date">Malam ke-16 - 19.30 WIB</div>
-                      </div>
-                    </div>
-                    <span className="jadwal-rakaat">11 Rakaat</span>
-                  </li>
-                  <li className="jadwal-item">
-                    <div className="jadwal-item-left">
-                      <div className="jadwal-avatar" style={{ background: 'linear-gradient(135deg,#7c3aed,#a78bfa)' }}>AF</div>
-                      <div>
-                        <div className="jadwal-name">Ust. Abdullah Fauzi</div>
-                        <div className="jadwal-date">Malam ke-17 - 19.30 WIB</div>
-                      </div>
-                    </div>
-                    <span className="jadwal-rakaat">11 Rakaat</span>
-                  </li>
-                  <li className="jadwal-item">
-                    <div className="jadwal-item-left">
-                      <div className="jadwal-avatar" style={{ background: 'linear-gradient(135deg,#dc2626,#f87171)' }}>I</div>
-                      <div>
-                        <div className="jadwal-name">Ust. Iwan</div>
-                        <div className="jadwal-date">Malam ke-18 - 19.30 WIB</div>
-                      </div>
-                    </div>
-                    <span className="jadwal-rakaat">11 Rakaat</span>
-                  </li>
+                      <span className="jadwal-rakaat">-</span>
+                    </li>
+                  ) : (
+                    previewSchedules.map((schedule, index) => {
+                      const imamName = schedule.imam?.nama || 'Imam belum ditentukan'
+
+                      return (
+                        <li key={schedule.id} className={`jadwal-item ${index === 0 ? 'active' : ''}`}>
+                          <div className="jadwal-item-left">
+                            <div
+                              className="jadwal-avatar"
+                              style={{ background: avatarGradients[index % avatarGradients.length] }}
+                            >
+                              {getInitials(imamName)}
+                            </div>
+                            <div>
+                              <div className="jadwal-name">{imamName}</div>
+                              <div className="jadwal-date">Malam ke-{schedule.malam} - {schedule.waktu}</div>
+                            </div>
+                          </div>
+                          <span className="jadwal-rakaat">{schedule.rakaat} Rakaat</span>
+                        </li>
+                      )
+                    })
+                  )}
                 </ul>
 
                 {/* Tombol ke Halaman Jadwal Lengkap */}
