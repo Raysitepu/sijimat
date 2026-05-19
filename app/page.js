@@ -16,6 +16,14 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 )
 
+const fallbackPreviewSchedules = Array.from({ length: 4 }, (_, index) => ({
+  id: `preview-empty-${index + 1}`,
+  malam: index + 1,
+  waktu: '19.30 WIB',
+  rakaat: 11,
+  imam: null,
+}))
+
 function getInitials(name = '') {
   const words = name
     .replace(/^Ust\.?\s*/i, '')
@@ -36,8 +44,16 @@ async function getPreviewSchedules() {
     .order('malam', { ascending: true })
     .limit(4)
 
-  if (error) return []
-  return data || []
+  if (error) return fallbackPreviewSchedules
+
+  const scheduleByNight = new Map(
+    (data || []).map((schedule) => [Number(schedule.malam), schedule])
+  )
+
+  return fallbackPreviewSchedules.map((fallback) => ({
+    ...fallback,
+    ...(scheduleByNight.get(fallback.malam) || {}),
+  }))
 }
 
 export default async function HomePage() {
@@ -87,40 +103,28 @@ export default async function HomePage() {
                   <span className="mockup-title">Jadwal Tarawih</span>
                 </div>
                 <ul className="jadwal-list" aria-label="Preview jadwal imam terbaru">
-                  {previewSchedules.length === 0 ? (
-                    <li className="jadwal-item active">
-                      <div className="jadwal-item-left">
-                        <div className="jadwal-avatar">IM</div>
-                        <div>
-                          <div className="jadwal-name">Jadwal belum tersedia</div>
-                          <div className="jadwal-date">Admin belum membuat jadwal</div>
-                        </div>
-                      </div>
-                      <span className="jadwal-rakaat">-</span>
-                    </li>
-                  ) : (
-                    previewSchedules.map((schedule, index) => {
-                      const imamName = schedule.imam?.nama || 'Imam belum ditentukan'
+                  {previewSchedules.map((schedule, index) => {
+                    const imamName = schedule.imam?.nama || 'Belum ditentukan'
+                    const hasRealImam = Boolean(schedule.imam?.nama)
 
-                      return (
-                        <li key={schedule.id} className={`jadwal-item ${index === 0 ? 'active' : ''}`}>
-                          <div className="jadwal-item-left">
-                            <div
-                              className="jadwal-avatar"
-                              style={{ background: avatarGradients[index % avatarGradients.length] }}
-                            >
-                              {getInitials(imamName)}
-                            </div>
-                            <div>
-                              <div className="jadwal-name">{imamName}</div>
-                              <div className="jadwal-date">Malam ke-{schedule.malam} - {schedule.waktu}</div>
-                            </div>
+                    return (
+                      <li key={schedule.id} className={`jadwal-item ${index === 0 ? 'active' : ''}`}>
+                        <div className="jadwal-item-left">
+                          <div
+                            className="jadwal-avatar"
+                            style={{ background: hasRealImam ? avatarGradients[index % avatarGradients.length] : '#9ca3af' }}
+                          >
+                            {hasRealImam ? getInitials(imamName) : 'BD'}
                           </div>
-                          <span className="jadwal-rakaat">{schedule.rakaat} Rakaat</span>
-                        </li>
-                      )
-                    })
-                  )}
+                          <div>
+                            <div className="jadwal-name">{imamName}</div>
+                            <div className="jadwal-date">Malam ke-{schedule.malam} - {schedule.waktu}</div>
+                          </div>
+                        </div>
+                        <span className="jadwal-rakaat">{schedule.rakaat} Rakaat</span>
+                      </li>
+                    )
+                  })}
                 </ul>
 
                 {/* Tombol ke Halaman Jadwal Lengkap */}
