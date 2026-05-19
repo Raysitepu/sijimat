@@ -80,8 +80,10 @@ export default function DashboardHeader({ role = 'user', title = 'SiJimat' }) {
                 textDecoration: 'none',
                 fontSize: '0.86rem',
                 fontWeight: '600',
-                width: link.icon ? '36px' : 'auto',
+                width: 'auto',
                 height: link.icon ? '36px' : 'auto',
+                padding: link.icon ? '0 0.65rem' : 0,
+                gap: link.icon ? '0.35rem' : 0,
                 borderRadius: link.icon ? '999px' : 0,
                 border: link.icon ? '1px solid #e5e7eb' : 'none',
                 display: 'inline-flex',
@@ -89,7 +91,12 @@ export default function DashboardHeader({ role = 'user', title = 'SiJimat' }) {
                 justifyContent: 'center',
               }}
             >
-              {link.icon ? <AccountIcon /> : link.label}
+              {link.icon ? (
+                <>
+                  <AccountIcon />
+                  <span>Profil</span>
+                </>
+              ) : link.label}
             </Link>
           ))}
           <a

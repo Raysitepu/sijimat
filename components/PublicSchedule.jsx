@@ -9,7 +9,12 @@ const statusStyle = {
   diganti: { label: 'Diganti', bg: '#fff7ed', color: '#c2410c' },
 }
 
-export default function PublicSchedule({ schedules, fallbackSchedules = [], title = 'Jadwal Imam Tarawih' }) {
+export default function PublicSchedule({
+  schedules,
+  fallbackSchedules = [],
+  title = 'Jadwal Imam Tarawih',
+  description,
+}) {
   const [search, setSearch] = useState('')
   const source = schedules.length > 0 ? schedules : fallbackSchedules
 
@@ -38,7 +43,7 @@ export default function PublicSchedule({ schedules, fallbackSchedules = [], titl
             {title}
           </h1>
           <p style={{ color: '#6b7280', fontSize: '0.92rem' }}>
-            {schedules.length > 0 ? 'Data jadwal ditampilkan dari dashboard admin.' : 'Menampilkan jadwal contoh sampai admin membuat jadwal.'}
+            {description || (schedules.length > 0 ? 'Data jadwal ditampilkan dari dashboard admin.' : 'Menampilkan jadwal contoh sampai admin membuat jadwal.')}
           </p>
         </div>
         <input
@@ -60,6 +65,7 @@ export default function PublicSchedule({ schedules, fallbackSchedules = [], titl
         {filtered.map((schedule) => {
           const imamName = schedule.imam?.nama || schedule.imam || 'Imam belum ditentukan'
           const status = statusStyle[schedule.status || 'terjadwal'] || statusStyle.terjadwal
+          const dateLabel = schedule.tanggal || schedule.tanggal_label || ''
           return (
             <article key={schedule.id || schedule.malam} style={{
               background: 'white',
@@ -89,7 +95,7 @@ export default function PublicSchedule({ schedules, fallbackSchedules = [], titl
                 {schedule.nama_masjid || schedule.imam?.nama_masjid || 'Masjid belum diisi'}
               </div>
               <div style={{ color: '#374151', fontSize: '0.8rem', fontWeight: '700' }}>
-                {schedule.rakaat} rakaat{schedule.tanggal ? ` - ${schedule.tanggal}` : ''}
+                {schedule.rakaat} rakaat{dateLabel ? ` - ${dateLabel}` : ''}
               </div>
               {schedule.catatan && (
                 <p style={{ color: '#6b7280', fontSize: '0.8rem', borderTop: '1px solid #f3f4f6', paddingTop: '0.55rem' }}>

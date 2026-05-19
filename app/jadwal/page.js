@@ -3,24 +3,43 @@ import { cookies } from 'next/headers'
 import { createClient } from '@supabase/supabase-js'
 import PublicSchedule from '../../components/PublicSchedule'
 import DashboardHeader from '../../components/DashboardHeader'
+import Navbar from '../../components/Navbar'
+import Footer from '../../components/Footer'
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL,
   process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 )
 
+const masjidUtama = 'Masjid Al-Ikhlas'
+
 const sampleImams = [
-  { id: 'abad-badrussalam', imam: 'Ust. Abad Badrussalam', rakaat: 11, waktu: '19.30 WIB', nama_masjid: 'Masjid Al-Ikhlas' },
-  { id: 'zaenal-abidin', imam: 'Ust. Zaenal Abidin', rakaat: 11, waktu: '19.30 WIB', nama_masjid: 'Masjid Al-Ikhlas' },
-  { id: 'abdullah-fauzi', imam: 'Ust. Abdullah Fauzi', rakaat: 11, waktu: '19.30 WIB', nama_masjid: 'Masjid Al-Ikhlas' },
-  { id: 'iwan', imam: 'Ust. Iwan', rakaat: 11, waktu: '19.30 WIB', nama_masjid: 'Masjid Al-Ikhlas' },
+  { id: 'abad-badrussalam', imam: 'Ust. Abad Badrussalam', rakaat: 11, waktu: '19.30 WIB', nama_masjid: masjidUtama },
+  { id: 'zaenal-abidin', imam: 'Ust. Zaenal Abidin', rakaat: 11, waktu: '19.30 WIB', nama_masjid: masjidUtama },
+  { id: 'abdullah-fauzi', imam: 'Ust. Abdullah Fauzi', rakaat: 11, waktu: '19.30 WIB', nama_masjid: masjidUtama },
+  { id: 'iwan', imam: 'Ust. Iwan', rakaat: 11, waktu: '19.30 WIB', nama_masjid: masjidUtama },
 ]
 
 const fallbackSchedules = Array.from({ length: 30 }, (_, index) => ({
   ...sampleImams[index % sampleImams.length],
   id: `sample-${index + 1}`,
   malam: index + 1,
+  tanggal_label: `Hari ke-${index + 1}`,
+  status: 'terjadwal',
 }))
+
+function buildThirtyNightSchedule(schedules = []) {
+  const scheduleByNight = new Map(
+    schedules
+      .filter((schedule) => Number(schedule.malam) >= 1 && Number(schedule.malam) <= 30)
+      .map((schedule) => [Number(schedule.malam), schedule])
+  )
+
+  return fallbackSchedules.map((fallback) => ({
+    ...fallback,
+    ...(scheduleByNight.get(fallback.malam) || {}),
+  }))
+}
 
 export default async function JadwalPage() {
   const role = cookies().get('session_role')?.value
@@ -32,11 +51,14 @@ export default async function JadwalPage() {
     .select('id, malam, tanggal, waktu, rakaat, nama_masjid, catatan, status, imam:imam_id(id, nama, nama_masjid)')
     .order('malam', { ascending: true })
 
+  const publicSchedules = buildThirtyNightSchedule(schedules || [])
+
   return (
     <>
       {isLoggedIn && (
         <DashboardHeader role={role || 'user'} />
       )}
+      {!isLoggedIn && <Navbar />}
       <main style={{ padding: isLoggedIn ? '2rem 1rem' : '4rem 0', background: '#f8fafc', minHeight: '100vh' }}>
         <div className="container">
           <Link
@@ -47,10 +69,15 @@ export default async function JadwalPage() {
           </Link>
 
           <div style={{ marginTop: '2rem' }}>
-            <PublicSchedule schedules={schedules || []} fallbackSchedules={fallbackSchedules} title="Jadwal Lengkap 30 Malam" />
+            <PublicSchedule
+              schedules={publicSchedules}
+              title="Jadwal Lengkap 30 Malam"
+              description="Jadwal bisa dilihat warga tanpa login. Data admin dipakai jika sudah tersedia, sisanya dilengkapi contoh jadwal 30 malam."
+            />
           </div>
         </div>
       </main>
+      {!isLoggedIn && <Footer />}
     </>
   )
 }

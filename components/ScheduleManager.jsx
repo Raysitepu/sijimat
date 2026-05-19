@@ -12,6 +12,8 @@ const statusOptions = [
   { value: 'diganti', label: 'Diganti', bg: '#fff7ed', color: '#c2410c' },
 ]
 
+const defaultMosqueName = 'Masjid Al-Ikhlas'
+
 function SubmitButton() {
   const { pending } = useFormStatus()
 
@@ -204,7 +206,7 @@ export default function ScheduleManager({ imams, schedules, scheduleError }) {
             </select>
           </Field>
           <Field label="Nama Masjid" error={errors.nama_masjid}>
-            <input name="nama_masjid" type="text" placeholder="Masjid Al-Ikhlas" required style={inputStyle(errors.nama_masjid)} />
+            <input name="nama_masjid" type="text" defaultValue={defaultMosqueName} required style={inputStyle(errors.nama_masjid)} />
           </Field>
           <Field label="Status Awal" error={errors.status}>
             <select name="status" defaultValue="terjadwal" style={inputStyle(errors.status)}>
