@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js'
+import { unstable_noStore as noStore } from 'next/cache'
 import Link from 'next/link'
 import RevealAnimation from '../components/RevealAnimation'
 
@@ -57,6 +58,8 @@ async function getPreviewSchedules() {
 }
 
 export default async function HomePage() {
+  noStore()
+
   const previewSchedules = await getPreviewSchedules()
 
   return (
